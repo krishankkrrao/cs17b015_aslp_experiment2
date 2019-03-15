@@ -13,26 +13,26 @@
 	.ent	main
 	.type	main, @function
 main:
-	.frame	$fp,256,$31		# vars= 224, regs= 2/0, args= 16, gp= 8
+	.frame	$fp,256,$31		
 	.mask	0xc0000000,-4
 	.fmask	0x00000000,0
 	.set	noreorder
 	.set	nomacro
-	addiu	$sp,$sp,-256				; $sp=$sp+(-256) ; add immediate unsigned //each distinct instruction will be described once
-	sw	$31,252($sp)				; Memory[$sp+252]=$31 ; store word
+	addiu	$sp,$sp,-256				
+	sw	$31,252($sp)				
 	sw	$fp,248($sp)				
-	move	$fp,$sp					; $fp=$sp ; move
-	lui	$28,%hi(__gnu_local_gp)			; $28=100x2^%hi ; load upper immediate
-	addiu	$28,$28,%lo(__gnu_local_gp)		; $28=$28+%lo ; add immediate unsigned
+	move	$fp,$sp					
+	lui	$28,%hi(__gnu_local_gp)			# $28=100x2^%hi ; load upper immediate
+	addiu	$28,$28,%lo(__gnu_local_gp)		# $28=$28+%lo ; add immediate unsigned
 	.cprestore	16
-	lw	$2,%got(__stack_chk_guard)($28)		; $2=Memory[$28+%got] ; load word
-	lw	$2,0($2)				; $2=Memory[$2+0] ; load word
+	lw	$2,%got(__stack_chk_guard)($28)		# $2=Memory[$28+%got] ; load word
+	lw	$2,0($2)				# $2=Memory[$2+0] ; load word
 	sw	$2,244($fp)				
-	li	$2,1			# 0x1		; $2=1 ; load immediate
+	li	$2,1			# 0x1		 
 	sw	$2,32($fp)				
 	sw	$0,40($fp)				
-	b	$L2					; branch unconditionally to line 2
-	nop						; This instruction will take up all 5 stages of pipeline
+	b	$L2					# branch  to line 2
+	nop					
 
 $L8:
 	sw	$0,36($fp)				
@@ -44,13 +44,13 @@ $L8:
 $L6:
 	lw	$3,32($fp)				
 	lw	$2,28($fp)				
-	teq	$2,$0,7					; trap 7 if $2=$0
-	div	$0,$3,$2				; $hi=$0, $lo=$3/$2
-	mfhi	$2					; $2=hi ; move from hi
-	bne	$2,$0,$L4				; if($2!=$0) go to PC+4+$L4 ; branch on not equal
+	teq	$2,$0,7					# trap 7 if $2=$0
+	div	$0,$3,$2				# $hi=$0, $lo=$3/$2
+	mfhi	$2					# $2=hi ; move from hi
+	bne	$2,$0,$L4				# if($2!=$0) go to PC+4+$L4 ; branch on not equal
 	nop						
 	lw	$2,36($fp)				
-	addiu	$2,$2,1					; $2=$2+1 ; add immediate unsigned
+	addiu	$2,$2,1					
 	sw	$2,36($fp)				
 	b	$L5					
 	nop						
@@ -61,13 +61,13 @@ $L4:
 	sw	$2,28($fp)				
 $L3:
 	lw	$2,32($fp)				
-	srl	$3,$2,31				; $3=$2>>31 ; shift right logical
-	addu	$2,$3,$2				; $2=$3+$2 ; add unsigned
-	sra	$2,$2,1					; $2=$2>>1 ; shift word right (arithmetic)
+	srl	$3,$2,31				# $3=$2>>31 ; shift right logical
+	addu	$2,$3,$2				# $2=$3+$2 ; add unsigned
+	sra	$2,$2,1					# $2=$2>>1 ; shift word right (arithmetic)
 	move	$3,$2					
 	lw	$2,28($fp)				
-	slt	$2,$3,$2				; if($3<$2)$2=1; else $2=0 ; set on less than
-	beq	$2,$0,$L6				; if($2==$0) go to PC+4+$L6 ; branch on equal
+	slt	$2,$3,$2				# if($3<$2)$2=1; else $2=0 ; set on less than
+	beq	$2,$0,$L6				# if($2==$0) go to PC+4+$L6 ; branch on equal
 	nop						
 
 $L5:
