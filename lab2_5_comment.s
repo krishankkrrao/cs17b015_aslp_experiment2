@@ -1,5 +1,5 @@
 	.file	1 "lab2_5.c"
-	.section .mdebug.abi32
+	.section .mdebu
 	.previous
 	.nan	legacy
 	.module	fp=xx
@@ -13,12 +13,12 @@
 	.ent	main
 	.type	main, @function
 main:
-	.frame	$fp,96,$31		# vars= 64, regs= 2/0, args= 16, gp= 8
+	.frame	$fp,96,$31		
 	.mask	0xc0000000,-4
 	.fmask	0x00000000,0
 	.set	noreorder
 	.set	nomacro
-	addiu	$sp,$sp,-96				; $sp=$sp+(-96) ; add immediate unsigned //each distinct instruction will be described once
+	addiu	$sp,$sp,-96				; $sp=$sp+(-96) ; add immediate unsigned
 	sw	$31,92($sp)				; Memory[$sp+92]=$31 ; store word
 	sw	$fp,88($sp)				
 	move	$fp,$sp					; $fp=$sp ; move
