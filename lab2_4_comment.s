@@ -18,20 +18,20 @@ Op:
 	.fmask	0x00000000,0
 	.set	noreorder
 	.set	nomacro
-	addiu	$sp,$sp,-16					; $sp=$sp+(-16) ; add immediate unsigned //each distinct instruction will be described once
-	sw	$fp,12($sp)					; Memory[$sp+12]=$fp ; store word
-	move	$fp,$sp						; $fp=$sp ; move
+	addiu	$sp,$sp,-16					# $sp=$sp+(-16) ; add immediate unsigned 
+	sw	$fp,12($sp)					# Memory[$sp+12]=$fp ; store word
+	move	$fp,$sp						# $fp=$sp ; move
 	sw	$4,16($fp)					
-	li	$2,1			# 0x1			; $2=1 ; load immediate
+	li	$2,1			# 0x1			# $2=1 ; load immediate
 	sw	$2,4($fp)					
-	lw	$2,16($fp)					; $2=Memory[$fp+16] ; load word
-	slt	$2,$2,2						; if($2<2)$2=1; else $2=0
-	beq	$2,$0,$L2					; if($2==$0) go to PC+4+$L2 ; branch on equal
-	nop							; This instruction will take up all 5 stages of pipeline
+	lw	$2,16($fp)					# $2=Memory[$fp+16] ; load word
+	slt	$2,$2,2						# if($2<2)$2=1; else $2=0
+	beq	$2,$0,$L2					# if($2==$0) go to PC+4+$L2 ; branch on equal
+	nop							# This instruction will take up all 5 stages of pipeline
 				
 	li	$2,-1			# 0xffffffffffffffff	
 	sw	$2,4($fp)					
-	b	$L3						; branch unconditionally to line 3
+	b	$L3						# branch unconditionally to line 3
 	nop							
 	
 $L2:		
@@ -43,10 +43,10 @@ $L2:
 $L6:
 	lw	$3,16($fp)					
 	lw	$2,0($fp)					
-	teq	$2,$0,7						; trap 7 if $2=$0
-	div	$0,$3,$2					; $hi=$0, $lo=$3/$2
-	mfhi	$2						; $2=hi ; move from hi
-	bne	$2,$0,$L5					; if($2!=$0) go to PC+4+$L5 ; branch on not equal
+	teq	$2,$0,7						# trap 7 if $2=$0
+	div	$0,$3,$2					# $hi=$0, $lo=$3/$2
+	mfhi	$2						# $2=hi ; move from hi
+	bne	$2,$0,$L5					# if($2!=$0) go to PC+4+$L5 ; branch on not equal
 	nop							
 	li	$2,-1			# 0xffffffffffffffff	
 	sw	$2,4($fp)							
@@ -55,13 +55,13 @@ $L6:
 		
 $L5:		
 	lw	$2,0($fp)					
-	addiu	$2,$2,1						; $2=$2+1 ; add immediate unsigned
+	addiu	$2,$2,1						# $2=$2+1 ; add immediate unsigned
 	sw	$2,0($fp)					
 $L4:
 	lw	$2,16($fp)					
-	srl	$3,$2,31					; $3=$2>>31 ; shift right logical
-	addu	$2,$3,$2					; $2=$3+$2 ; add unsigned
-	sra	$2,$2,1						; $2=$2>>1 ; shift word right (arithmetic)
+	srl	$3,$2,31					# $3=$2>>31 ; shift right logical
+	addu	$2,$3,$2					# $2=$3+$2 ; add unsigned
+	sra	$2,$2,1						# $2=$2>>1 ; shift word right (arithmetic)
 	move	$3,$2						
 	lw	$2,0($fp)					
 	slt	$2,$3,$2					
@@ -80,7 +80,7 @@ $L3:
 
 $L7:
 	lw	$2,16($fp)					
-	andi	$2,$2,0x1					; $2=$2&1 ; Bitwise and immediate
+	andi	$2,$2,0x1					# $2=$2&1 ; Bitwise and immediate
 	bne	$2,$0,$L9					
 	nop							
 
@@ -93,7 +93,7 @@ $L9:
 $L8:	
 	move	$sp,$fp						
 	lw	$fp,12($sp)							
-	addiu	$sp,$sp,16					; $sp=$sp+16 ; add immediate unsigned
+	addiu	$sp,$sp,16					# $sp=$sp+16 ; add immediate unsigned
 	jr	$31						; go to address stored in $31 ; jump register
 	nop							
 
@@ -238,4 +238,4 @@ $L11:
 	.set	reorder
 	.end	main
 	.size	main, .-main
-	.ident	"GCC: (Ubuntu 5.4.0-6ubuntu1~16.04.9) 5.4.0 20160609"
+	.ident	"GCC: (Ubuntu 5.4.) 5.4.0 20160609"
