@@ -13,17 +13,17 @@
 	.ent	main
 	.type	main, @function
 main:
-	.frame	$fp,72,$31		# vars= 40, regs= 2/0, args= 16, gp= 8
+	.frame	$fp,72,$31		
 	.mask	0xc0000000,-4
 	.fmask	0x00000000,0
 	.set	noreorder
 	.set	nomacro
-	addiu	$sp,$sp,-72				; $sp=$sp+(-72) ; add immediate unsigned //each distinct instruction will be described once
-	sw	$31,68($sp)				; Memory[$sp+68]=$31 ; store word
+	addiu	$sp,$sp,-72				
+	sw	$31,68($sp)				
 	sw	$fp,64($sp)				
-	move	$fp,$sp					; $fp=$sp ; move
-	lui	$28,%hi(__gnu_local_gp)			; $28=100x2^%hi ; load upper immediate
-	addiu	$28,$28,%lo(__gnu_local_gp)		; $28=$28+%lo ; add immediate unsigned
+	move	$fp,$sp					
+	lui	$28,%hi(__gnu_local_gp)			
+	addiu	$28,$28,%lo(__gnu_local_gp)		
 	.cprestore	16
 	lw	$2,%got(__stack_chk_guard)($28)		; $2=Memory[$28+%got] ; load word
 	lw	$2,0($2)				; $2=Memory[$2+0] ; load word
@@ -43,14 +43,13 @@ main:
 	li	$2,5			# 0x5		
 	sw	$2,56($fp)				
 	sw	$0,28($fp)				 
-	b	$L2					; branch unconditionally to line 2
-	nop						; This instruction will take up all 5 stages of pipeline
-
+	b	$L2					; branch to line 2
+	nop						
 $L3:
 	lw	$2,28($fp)				
 	sll	$2,$2,2					; $2=$2<<2 ; shift left logical
-	addiu	$3,$fp,64				; $3=$fp+64 ; add immediate unsigned
-	addu	$2,$3,$2				; $2=$3+$2 ; add unsigned
+	addiu	$3,$fp,64				
+	addu	$2,$3,$2				
 	lw	$3,-24($2)				
 	lw	$2,36($fp)				
 	addu	$3,$3,$2				
@@ -93,4 +92,4 @@ $L5:
 	.set	reorder
 	.end	main
 	.size	main, .-main
-	.ident	"GCC: (Ubuntu 5.4.0-6ubuntu1~16.04.9) 5.4.0 20160609"
+	.ident	"GCC: (Ubuntu 5.4)"
